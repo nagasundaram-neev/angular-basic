@@ -1,7 +1,7 @@
 function MyFirstController($scope){
 		$scope.appliedStyle='btn';
 		$scope.items=[];
-		$scope.theme='jumbotron';
+		$scope.theme='container';
 		for (var i = 0;i<=100; i++) {
 			$scope.items.push(i);
 		}
@@ -11,6 +11,7 @@ function MyFirstController($scope){
     {name: 'Success', className:'btn btn-success'}
     ];
 
+    
 			$scope.up=function(){
 
 			$scope.firstname=$scope.firstname.toUpperCase()

@@ -1,9 +1,13 @@
 <html >
 	<head>
 		<link rel="stylesheet" href="bootstrap.css">
+
 	</head>
 	<body ng-app ng-controller="MyFirstController"  class="{{theme}}">
-	<input type="checkbox" ng-model="theme" ng-true-value="jumbotron" ng-false-value="container" class='color-red pull-right'>
+	<div class='badge pull-right'>
+		Current Theme: {{theme}}
+	</div>
+	<input type="checkbox" ng-model="theme" ng-true-value="container" ng-false-value="jumbotron" class='color-red pull-right'>
 	<div class=row-fluid>
 		<!-- <div class='row'>
 			<span class='col-md-12'>
@@ -20,9 +24,10 @@
  <!-- ==================================================================================================================================== -->
 		<div class='row'>
 			<span class='col-md-12'>
-				<div class="panel panel-default">
+				<div class="panel panel-primary">
+		 			<div class='panel-heading'>ng-repeat, ng-class</div>
   				<div class='panel-body'>
-						<button ng-repeat="i in items" ng-class="appliedStyle" ng-mouseover="$parent.clickednum=i" ng-click= run()>
+						<button ng-repeat="i in items" ng-class="appliedStyle" ng-mouseover="$parent.clickednum=i;run()" >
 								{{i}}
 						</button>
 						<button ng-repeat="style in styles" ng-class="style.className" type="submit" ng-click="$parent.appliedStyle=style.className">
@@ -42,13 +47,10 @@
 			</span>	
 		</div>
 
-
-
-
 <!-- ==================================================================================================================================== -->
 <div class="row">
 	 <form name="myForm" role="form">
-		 	<span class="col-lg-5">
+		 	<span class="col-lg-4">
 		 		<div class="{{panel_style}}">
 		 			<div class='panel-heading'>ng Form</div>
   				<div class='panel-body'>
@@ -88,7 +90,7 @@
 			   </div>
 			  </div>
 			</span> 
-  		<span class='col-lg-6'>
+  		<span class='col-lg-8'>
 		  	<div class="panel panel-warning">
 		  		<div class='panel-heading'>ng Validations</div>
 		  		<div class='panel-body'>
@@ -147,10 +149,58 @@
 					</div>
 				</div>
 			</span>
-			
-			
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
-			<script src="script.js"></script>
+			<span class="col-lg-3">
+		 		<div class="{{panel_style}}">
+		 			<div class='panel-heading'>ng-checked</div>
+  				<div class='panel-body'>
+				 		<i class='panel panel-info'><input type="checkbox" ng-checked="master" ng-repeat="i in items"></i> 
+	    			<div>Select All<input type="checkbox" ng-model="master"></div> 
+					</div>
+				</div>
+			</span>
+			<span class="col-lg-3">
+		 		<div class="{{panel_style}}">
+		 			<div class='panel-heading'>ng-class-odd, ng-class-even, ng-init, ng-click</div>
+  				<div class='panel-body'>
+				 		<span  ng-repeat="i in items">
+	    				<span ng-class-odd="'text-danger'" ng-class-even="'text-success'"> {{i}} </span>
+	    			</span>
+	    			<button ng-click="count = count + 1" ng-init="count=0" class='glyphicon glyphicon-plus btn btn-success btn-block '>
+      				count: {{count}}
+    				</button>
+					</div>
+				</div>
+			</span>
+<!-- =================================================================================================================================== -->
+		 <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-lg">ng-list, ng-multiple</a>
+		 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">ng-list, ng-multiple</h4>
+        </div>
+        <div class="modal-body">
+           List: <input name="namesInput" ng-model="names" ng-list class='form-control'>
+           Check me check multiple: <input type="checkbox" ng-model="checked" class='form-control'><br/>
+   				 <select id="select" ng-multiple="checked" class='form-control' >
+				      <option ng-repeat='name in names'>{{name}}</option>
+			    </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn {{names[0]}}">Save changes</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+	  <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script>
+		<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js'></script>
+		<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+		<script src="bootstrap.js"></script>
+		<script src="angular.js"></script>
+		<script src="script.js"></script>
 		</div>
 	</body>
 </html>
