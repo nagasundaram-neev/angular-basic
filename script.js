@@ -1,3 +1,5 @@
+
+
 function MyFirstController($scope){
 		$scope.appliedStyle='btn';
 		$scope.items=[];
@@ -10,7 +12,18 @@ function MyFirstController($scope){
     {name: 'Info', className:'btn btn-info'},
     {name: 'Success', className:'btn btn-success'}
     ];
+ // $scope.symbols=[
+ // 🀀,🀁,🀂,🀃,🀄,🀅,🀆,🀇,🀈,🀉,🀊,🀋,🀌,🀍,🀎,🀏,🀐,🀑,🀒,🀓,🀔,🀕,🀖,🀗,🀘,🀙,🀚,🀛,🀜,🀝,🀞,🀟,	🀠,🀡,🀢,🀣,🀤,	🀥,🀦,🀧,🀨,🀩,🀪,🀫
+ // ];
+		 $scope.friends =
+      [{name:'John', phone:'"&#126976;"555-1212', age:10},
+       {name:'Mary', phone:'555-9876', age:19},
+       {name:'Mike', phone:'555-4321', age:21},
+       {name:'Adam', phone:'555-5678', age:35},
+       {name:'Julie', phone:'555-8765', age:29}]
+  $scope.predicate = '-age';
 
+    $scope.images = ["1.jpg","2.jpg","3.jpg"];
     
 			$scope.up=function(){
 

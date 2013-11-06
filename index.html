@@ -1,9 +1,10 @@
-<html >
+<html ng-app>
 	<head>
 		<link rel="stylesheet" href="bootstrap.css">
-
+		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 	</head>
-	<body ng-app ng-controller="MyFirstController"  class="{{theme}}">
+	<body  ng-controller="MyFirstController"  class="{{theme}}">
 	<div class='badge pull-right'>
 		Current Theme: {{theme}}
 	</div>
@@ -46,8 +47,7 @@
 			</div>
 			</span>	
 		</div>
-
-<!-- ==================================================================================================================================== -->
+ <!-- ==================================================================================================================================== -->
 <div class="row">
 	 <form name="myForm" role="form">
 		 	<span class="col-lg-4">
@@ -127,8 +127,9 @@
 		 			<div class='panel-heading'>ng-bind</div>
   				<div class='panel-body'>
   					<div class="form-group">
+  						Readonly: <input type="checkbox" ng-model="readonly"><br/>
 					    <label>Input:</label>
-					    <input type="text" name="email" class="form-control" placeholder="Enter something" ng-model="input">
+					    <input type="text" name="email" ng-readonly="readonly" class="form-control" placeholder="Enter something" ng-model="input">
 					    <label>Output:</label>
 					    <span ng-bind="input"></span>
 					  </div>
@@ -159,6 +160,7 @@
 				</div>
 			</span>
 			<span class="col-lg-3">
+				<div class="{{draggable}}">{{draggable}}
 		 		<div class="{{panel_style}}">
 		 			<div class='panel-heading'>ng-class-odd, ng-class-even, ng-init, ng-click</div>
   				<div class='panel-body'>
@@ -169,6 +171,7 @@
       				count: {{count}}
     				</button>
 					</div>
+				</div>
 				</div>
 			</span>
 <!-- =================================================================================================================================== -->
@@ -181,9 +184,9 @@
           <h4 class="modal-title">ng-list, ng-multiple</h4>
         </div>
         <div class="modal-body">
-           List: <input name="namesInput" ng-model="names" ng-list class='form-control'>
-           Check me check multiple: <input type="checkbox" ng-model="checked" class='form-control'><br/>
-   				 <select id="select" ng-multiple="checked" class='form-control' >
+           Add items here: <input name="namesInput" ng-model="names" ng-list class='form-control'>
+           Do you want to select multiple items? <input type="checkbox" ng-model="checked" ><br/>
+   				 Select item(s) from here <select id="select" ng-multiple="checked" class='form-control' >
 				      <option ng-repeat='name in names'>{{name}}</option>
 			    </select>
         </div>
@@ -194,10 +197,90 @@
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
-
+<!-- =================================================================================================================================== -->
+  <div class="draggable">
+  	<div class='well col-md-4'>
+	  	Click me: <input type="checkbox" ng-model="checked"><br/>
+	    Show: <span ng-show="checked">I show up when your checkbox is checked.</span> <br/>
+	    Hide: <span ng-hide="checked">I hide when your checkbox is checked.</span>
+  </div></div>
+ 
+  <select ng-model="selection" ng-init="img_styles=[{name: 'rounded', className: 'img-rounded'},{name: 'circle', className: 'img-circle'},{name:'thumbnail',className: img-thumbnail}]">
+  	<option ng-repeat="img_style in img_styles" ng-change="$parent.img_class=img_style.className">{{img_style.name}}</option>
+  </select>
+  <select ng-model="selected_image" >
+  	<option ng-repeat="img in images">{{img}}</option>
+  </select>
+  
+  <div ng-switch on="selection" class='draggable'>
+     <div ng-switch-when="rounded"><img src={{selected_image}} class='col-md-2 img-responsive img-rounded '></div>
+     <span ng-switch-when="circle"><img src={{selected_image}} class='col-md-2 img-responsive img-circle'></span>
+     <span ng-switch-default><img src={{selected_image}} class='col-md-2 img-responsive img-thumbnail'></span>
+</div>
+		
 	  <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script>
 		<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js'></script>
 		<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+		<script>
+			$( ".draggable" ).draggable();
+		</script>
+		<!-- ======================================================================================================================= -->
+    <div class="row">
+		 	<span class="col-lg-3">
+		 		<div class="{{panel_style}}">
+		 			<div class='panel-heading'>filter</div>
+  				<div class='panel-body'>
+				    Search: <input ng-model="searchText" class='form-control'>
+				    <table id="searchTextResults">
+				      <tr><th>Name</th><th>Phone</th></tr>
+				      <tr ng-repeat="friend in friends | filter:searchText">
+				        <td>{{friend.name}}</td>
+				        <td>{{friend.phone}}</td>
+				      </tr>
+				    </table>
+				    <hr>
+				    Any: <input ng-model="search.$" class='form-control'> <br>
+				    Name only <input ng-model="search.name" class='form-control'><br>
+				    Phone only <input ng-model="search.phone" class='form-control'><br>
+				    Equality <input type="checkbox" ng-model="strict" ><br>
+				    <table id="searchObjResults">
+				      <tr><th>Name</th><th>Phone</th></tr>
+				      <tr ng-repeat="friend in friends | filter:search:strict">
+				        <td>{{friend.name}}</td>
+				        <td>{{friend.phone}}</td>
+				      </tr>
+				    </table>
+				  </div>
+				</div>
+			</span>
+		</div>
+  <!-- ================================================================================================== -->
+		<div class="row">
+		 	<span class="col-lg-3">
+		 		<div class="{{panel_style}}">
+		 			<div class='panel-heading'>filter</div>
+  				<div class='panel-body'>
+			
+      <pre>Sorting predicate = {{predicate}}; reverse = {{reverse}}</pre>
+      <hr/>
+      [ <a href="" ng-click="predicate=''">unsorted</a> ]
+      <table class="friend">
+        <tr>
+          <th><a href="" ng-click="predicate = 'name'; reverse=false">Name</a>
+              (<a href="" ng-click="predicate = '-name'; reverse=false">^</a>)</th>
+          <th><a href="" ng-click="predicate = 'phone'; reverse=!reverse">Phone Number</a></th>
+          <th><a href="" ng-click="predicate = 'age'; reverse=!reverse">Age</a></th>
+        </tr>
+        <tr ng-repeat="friend in friends | orderBy:predicate:reverse">
+          <td>&#128652;&#9749; &#128674;{{friend.name}}</td>
+          <td>{{friend.phone}}</td>
+          <td>{{friend.age}}</td>
+        </tr>
+      </table>
+    </div>
+	</div>
+			</span>
+		</div>
 		<script src="bootstrap.js"></script>
 		<script src="angular.js"></script>
 		<script src="script.js"></script>
